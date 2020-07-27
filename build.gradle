@@ -1,0 +1,51 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.10.BUILD-SNAPSHOT'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {
+	//implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+	//implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	//implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	//implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	//runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	//For Wildfly build
+	//compile("org.springframework.boot:spring-boot-starter-web")
+	//providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+
+	//minioclient: https://mvnrepository.com/artifact/io.minio/minio
+	compile group: 'io.minio', name: 'minio', version: '7.1.0'
+
+	compile group: 'commons-io', name: 'commons-io', version: '2.7'
+}
+
+test {
+	useJUnitPlatform()
+}
