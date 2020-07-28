@@ -44,6 +44,13 @@ dependencies {
 	compile group: 'io.minio', name: 'minio', version: '7.1.0'
 
 	compile group: 'commons-io', name: 'commons-io', version: '2.7'
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+
+
 }
 
 test {
