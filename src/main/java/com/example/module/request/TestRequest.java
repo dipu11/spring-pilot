@@ -7,4 +7,6 @@ import lombok.Data;
  */
 @Data
 public class TestRequest {
+
+    private String name;
 }

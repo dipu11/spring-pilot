@@ -1,18 +1,23 @@
 package com.example.module.controller;
 
+import com.example.module.model.MultilevelModel;
 import com.example.module.response.Response;
 import com.example.module.response.Status;
 import com.example.module.service.MinioService;
+import com.example.module.service.PdfService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.text.WordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Collections;
 
 /**
@@ -26,10 +31,15 @@ public class Controller {
     @Autowired
     private MinioService minioService;
 
+    @Autowired
+    private PdfService pdfService;
+
     @GetMapping
     public ResponseEntity<Response> testAPI()
     {
         log.info("testing first api creation :D !");
+        String ss="JULY".toLowerCase();
+        log.info(WordUtils.capitalize(ss));
 
         return ResponseEntity.ok(new Response());
     }
@@ -97,5 +107,21 @@ public class Controller {
 
         response=new Response(HttpStatus.INTERNAL_SERVER_ERROR, Status.ERROR, false, Collections.emptyList());
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("generate-pdf")
+    public ResponseEntity<Response> generatePdf()
+    {
+        boolean result=pdfService.generateDummyPdf();
+        Response response=new Response(HttpStatus.OK, Status.SUCCESS, result, Collections.emptyList());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("nested-json-mapping")
+    public ResponseEntity<Response> mapNestedJson(@Valid @RequestBody MultilevelModel model, BindingResult result)
+    {
+        log.info(model);
+
+        return ResponseEntity.ok(new Response(model));
     }
 }

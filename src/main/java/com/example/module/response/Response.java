@@ -24,4 +24,9 @@ public class Response <T> implements Serializable {
         this.setBody(body);
         this.errorList = errorList;
     }
+
+    public Response(T body) {
+
+        this.setBody(body);
+    }
 }
